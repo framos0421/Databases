@@ -6,25 +6,35 @@
 
 public class IntList {
 
-    /** The integer stored by this node. */
+    /**
+     * The integer stored by this node.
+     */
     public int item;
-    /** The next node in this IntList. */
+    /**
+     * The next node in this IntList.
+     */
     public IntList next;
 
-    /** Constructs an IntList storing ITEM and next node NEXT. */
+    /**
+     * Constructs an IntList storing ITEM and next node NEXT.
+     */
     public IntList(int item, IntList next) {
         this.item = item;
         this.next = next;
     }
 
-    /** Constructs an IntList storing ITEM and no next node. */
+    /**
+     * Constructs an IntList storing ITEM and no next node.
+     */
     public IntList(int item) {
         this(item, null);
     }
 
-    /** Returns an IntList consisting of the elements in ITEMS.
+    /**
+     * Returns an IntList consisting of the elements in ITEMS.
      * IntList L = IntList.list(1, 2, 3);
-     * System.out.println(L.toString()) // Prints 1 2 3 */
+     * System.out.println(L.toString()) // Prints 1 2 3
+     */
     public static IntList of(int... items) {
         /** Check for cases when we have no element given. */
         if (items.length == 0) {
@@ -49,8 +59,19 @@ public class IntList {
      * @return The element at [position]
      */
     public int get(int position) {
-        // YOUR CODE HERE
-        return -1;
+        IntList index = this;
+        int i = 0;
+        if (position < 0) {
+            throw new IllegalArgumentException("POSITION IS OUT OF RANGE");
+        }
+        while (i < position) {
+            if (index.next == null) {
+                throw new IllegalArgumentException("POSITION OUT OF RANGE");
+            }
+            i += 1;
+            index = index.next;
+        }
+        return index.item;
     }
 
     /**
@@ -60,8 +81,23 @@ public class IntList {
      * @return The String representation of the list.
      */
     public String toString() {
-        // YOUR CODE HERE
-        return null;
+        //IntList i = new IntList;
+        String listRep = "";
+        while (this.next != null) {
+            String character = Integer.toString(this.item);
+            listRep += character;
+        }
+        return listRep;
+    }
+
+    public int iterativeSize() {
+        IntList p = this;
+        int totalSize = 0;
+        while (p != null) {
+            totalSize += 1;
+            p = p.next;
+        }
+        return totalSize;
     }
 
     /**
@@ -71,105 +107,147 @@ public class IntList {
      * @return Whether the two lists are equal.
      */
     public boolean equals(Object obj) {
-        // YOUR CODE HERE
+        if (obj instanceof IntList) {
+            if (this.iterativeSize() == ((IntList) obj).iterativeSize()) {
+                IntList another = this;
+                int p = 0;
+                int size = another.iterativeSize();
+                while (p < size) {
+                    if (another.item != ((IntList) obj).item) {
+                        return false;
+                    }
+                    obj = ((IntList) obj).next;
+                    another = another.next;
+                    p += 1;
+                }
+                return true;
+            }
+            return false;
+        }
         return false;
     }
 
-    /**
-     * Adds the given value at the end of the list.
-     *
-     * @param value, the int to be added.
-     */
-    public void add(int value) {
-        // YOUR CODE HERE
-    }
+        /**
+         * Adds the given value at the end of the list.
+         *
+         * @param value, the int to be added.
+         */
+        public void add ( int value){
+            IntList list = this;
+            int size = list.iterativeSize();
+            for (int i = 0; i < size; i++) {
+                list = list.next;
+            }
+            list.next = new IntList( value, null);
+        }
 
-    /**
-     * Returns the smallest element in the list.
-     *
-     * @return smallest element in the list
-     */
-    public int smallest() {
-        // YOUR CODE HERE
-        return -1;
-    }
+        /**
+         * Returns the smallest element in the list.
+         *
+         * @return smallest element in the list
+         */
+        public int smallest(){
+            IntList list = this.next;
+            int size = this.iterativeSize();
+            int small = this.item;
+            for (int i =0; i < size-1; i++){
+                if(list.item < small){
+                    small = list.item;
+                }
+                list = list.next;
+            }
+            return small;
+        }
 
-    /**
-     * Returns the sum of squares of all elements in the list.
-     *
-     * @return The sum of squares of all elements.
-     */
-    public int squaredSum() {
-        // YOUR CODE HERE
-        return -1;
-    }
+        /**
+         * Returns the sum of squares of all elements in the list.
+         *
+         * @return The sum of squares of all elements.
+         */
+        public int squaredSum () {
+            // YOUR CODE HERE
+            return -1;
+        }
 
-    /**
-     * Destructively squares each item of the list.
-     *
-     * @param L list to destructively square.
-     */
-    public static void dSquareList(IntList L) {
-        while (L != null) {
-            L.item = L.item * L.item;
+        /**
+         * Destructively squares each item of the list.
+         *
+         * @param L list to destructively square.
+         */
+        public static void dSquareList (IntList L){
+            while (L != null) {
+                L.item = L.item * L.item;
+                L = L.next;
+            }
+        }
+
+        /**
+         * Returns a list equal to L with all elements squared. Non-destructive.
+         *
+         * @param L list to non-destructively square.
+         * @return the squared list.
+         */
+        public static IntList squareListIterative (IntList L){
+            if (L == null) {
+                return null;
+            }
+            IntList res = new IntList(L.item * L.item, null);
+            IntList ptr = res;
             L = L.next;
+            while (L != null) {
+                ptr.next = new IntList(L.item * L.item, null);
+                L = L.next;
+                ptr = ptr.next;
+            }
+            return res;
         }
-    }
 
-    /**
-     * Returns a list equal to L with all elements squared. Non-destructive.
-     *
-     * @param L list to non-destructively square.
-     * @return the squared list.
-     */
-    public static IntList squareListIterative(IntList L) {
-        if (L == null) {
-            return null;
+        /** Returns a list equal to L with all elements squared. Non-destructive.
+         *
+         * @param L list to non-destructively square.
+         * @return the squared list.
+         */
+        public static IntList squareListRecursive (IntList L){
+            if (L == null) {
+                return null;
+            }
+            return new IntList(L.item * L.item, squareListRecursive(L.next));
         }
-        IntList res = new IntList(L.item * L.item, null);
-        IntList ptr = res;
-        L = L.next;
-        while (L != null) {
-            ptr.next = new IntList(L.item * L.item, null);
-            L = L.next;
-            ptr = ptr.next;
+
+        /**
+         * Returns a new IntList consisting of A followed by B,
+         * destructively.
+         *
+         * @param A list to be on the front of the new list.
+         * @param B list to be on the back of the new list.
+         * @return new list with A followed by B.
+         */
+        public static IntList dcatenate (IntList A, IntList B){
+            IntList C = A;
+            for (int i = 0; i < A.iterativeSize(); i++){
+                C = C.next;
+            }
+            C.next = B;
+            return A;
         }
-        return res;
-    }
 
-    /** Returns a list equal to L with all elements squared. Non-destructive.
-     *
-     * @param L list to non-destructively square.
-     * @return the squared list.
-     */
-    public static IntList squareListRecursive(IntList L) {
-        if (L == null) {
-            return null;
+        /**
+         * Returns a new IntList consisting of A followed by B,
+         * non-destructively.
+         *
+         * @param A list to be on the front of the new list.
+         * @param B list to be on the back of the new list.
+         * @return new list with A followed by B.
+         */
+        public static IntList catenate (IntList A, IntList B){
+            IntList Z = new IntList(0, null);
+            IntList C = Z;
+            for (int i = 0; i < A.iterativeSize(); i++){
+                C.item = A.item;
+                C = C.next;
+                A = A.next;
+            }
+            return dcatenate(C,B);
+            }
         }
-        return new IntList(L.item * L.item, squareListRecursive(L.next));
-    }
 
-    /**
-     * Returns a new IntList consisting of A followed by B,
-     * destructively.
-     *
-     * @param A list to be on the front of the new list.
-     * @param B list to be on the back of the new list.
-     * @return new list with A followed by B.
-     */
-    public static IntList dcatenate(IntList A, IntList B) {
-        return null;
-    }
-
-    /**
-     * Returns a new IntList consisting of A followed by B,
-     * non-destructively.
-     *
-     * @param A list to be on the front of the new list.
-     * @param B list to be on the back of the new list.
-     * @return new list with A followed by B.
-     */
-     public static IntList catenate(IntList A, IntList B) {
-         return null;
-     }
-}
