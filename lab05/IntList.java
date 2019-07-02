@@ -6,25 +6,35 @@
 
 public class IntList {
 
-    /** The integer stored by this node. */
+    /**
+     * The integer stored by this node.
+     */
     public int item;
-    /** The next node in this IntList. */
+    /**
+     * The next node in this IntList.
+     */
     public IntList next;
 
-    /** Constructs an IntList storing ITEM and next node NEXT. */
+    /**
+     * Constructs an IntList storing ITEM and next node NEXT.
+     */
     public IntList(int item, IntList next) {
         this.item = item;
         this.next = next;
     }
 
-    /** Constructs an IntList storing ITEM and no next node. */
+    /**
+     * Constructs an IntList storing ITEM and no next node.
+     */
     public IntList(int item) {
         this(item, null);
     }
 
-    /** Returns an IntList consisting of the elements in ITEMS.
+    /**
+     * Returns an IntList consisting of the elements in ITEMS.
      * IntList L = IntList.list(1, 2, 3);
-     * System.out.println(L.toString()) // Prints 1 2 3 */
+     * System.out.println(L.toString()) // Prints 1 2 3
+     */
     public static IntList of(int... items) {
         /** Check for cases when we have no element given. */
         if (items.length == 0) {
@@ -166,50 +176,51 @@ public class IntList {
         return sum;
     }
 
-    /**
-     * Destructively squares each item of the list.
-     *
-     * @param L list to destructively square.
-     */
-    public static void dSquareList(IntList L) {
-        while (L != null) {
-            L.item = L.item * L.item;
-            L = L.next;
-        }
-    }
 
-    /**
-     * Returns a list equal to L with all elements squared. Non-destructive.
-     *
-     * @param L list to non-destructively square.
-     * @return the squared list.
-     */
-    public static IntList squareListIterative(IntList L) {
-        if (L == null) {
-            return null;
+        /**
+         * Destructively squares each item of the list.
+         *
+         * @param L list to destructively square.
+         */
+        public static void dSquareList (IntList L){
+            while (L != null) {
+                L.item = L.item * L.item;
+                L = L.next;
+            }
         }
-        IntList res = new IntList(L.item * L.item, null);
-        IntList ptr = res;
-        L = L.next;
-        while (L != null) {
-            ptr.next = new IntList(L.item * L.item, null);
-            L = L.next;
-            ptr = ptr.next;
-        }
-        return res;
-    }
 
-    /** Returns a list equal to L with all elements squared. Non-destructive.
-     *
-     * @param L list to non-destructively square.
-     * @return the squared list.
-     */
-    public static IntList squareListRecursive(IntList L) {
-        if (L == null) {
-            return null;
+        /**
+         * Returns a list equal to L with all elements squared. Non-destructive.
+         *
+         * @param L list to non-destructively square.
+         * @return the squared list.
+         */
+        public static IntList squareListIterative (IntList L){
+            if (L == null) {
+                return null;
+            }
+            IntList res = new IntList(L.item * L.item, null);
+            IntList ptr = res;
+            L = L.next;
+            while (L != null) {
+                ptr.next = new IntList(L.item * L.item, null);
+                L = L.next;
+                ptr = ptr.next;
+            }
+            return res;
         }
-        return new IntList(L.item * L.item, squareListRecursive(L.next));
-    }
+
+        /** Returns a list equal to L with all elements squared. Non-destructive.
+         *
+         * @param L list to non-destructively square.
+         * @return the squared list.
+         */
+        public static IntList squareListRecursive (IntList L){
+            if (L == null) {
+                return null;
+            }
+            return new IntList(L.item * L.item, squareListRecursive(L.next));
+        }
 
     /**
      * Returns a new IntList consisting of A followed by B,
