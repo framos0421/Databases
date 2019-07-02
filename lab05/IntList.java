@@ -49,8 +49,19 @@ public class IntList {
      * @return The element at [position]
      */
     public int get(int position) {
-        // YOUR CODE HERE
-        return -1;
+        if (position <0){
+            throw new IllegalArgumentException("Position out of range");
+        }
+        IntList p = this;
+        int l = 0;
+        while (l< position){
+           if(p.next==null){
+               throw new IllegalArgumentException("Position out of range");
+           }
+            p = p.next;
+            l++;
+        }
+        return p.item;
     }
 
     /**
@@ -60,8 +71,24 @@ public class IntList {
      * @return The String representation of the list.
      */
     public String toString() {
-        // YOUR CODE HERE
-        return null;
+        IntList p = this;
+        String msg = "";
+        while (!(p.next == null)){
+            msg+= Integer.toString(p.item) +" ";
+            p = p.next;
+        }
+        msg += p.item;
+        return msg;
+    }
+
+    public int iterativeSize() {
+        IntList p = this;
+        int totalSize = 0;
+        while (p != null) {
+            totalSize += 1;
+            p = p.next;
+        }
+        return totalSize;
     }
 
     /**
@@ -71,7 +98,22 @@ public class IntList {
      * @return Whether the two lists are equal.
      */
     public boolean equals(Object obj) {
-        // YOUR CODE HERE
+        if (obj instanceof IntList){
+            if (this.iterativeSize()==((IntList) obj).iterativeSize()){
+                IntList des = this;
+                int p = this.iterativeSize();
+                int i = 0;
+                while (i<p){
+                    if (des.item != ((IntList)obj).item){
+                        return false;
+                    }
+                    des = des.next;
+                    obj = ((IntList)obj).next;
+                    i++;
+                }
+                return true;
+            }
+        }
         return false;
     }
 
@@ -81,7 +123,12 @@ public class IntList {
      * @param value, the int to be added.
      */
     public void add(int value) {
-        // YOUR CODE HERE
+        int p = this.iterativeSize();
+        IntList des = this;
+        for(int i =1; i<p;i++){
+            des = des.next;
+        }
+        des.next = new IntList(value, null);
     }
 
     /**
@@ -90,8 +137,16 @@ public class IntList {
      * @return smallest element in the list
      */
     public int smallest() {
-        // YOUR CODE HERE
-        return -1;
+        int small = this.item;
+        int p = this.iterativeSize();
+        IntList des = this.next;
+        for( int i = 0; i<p-1;i++){
+            if(des.item<small){
+                small = des.item;
+            }
+            des = des.next;
+        }
+        return small;
     }
 
     /**
@@ -100,8 +155,15 @@ public class IntList {
      * @return The sum of squares of all elements.
      */
     public int squaredSum() {
-        // YOUR CODE HERE
-        return -1;
+        IntList des = this;
+        int p = iterativeSize();
+        int sum = 0;
+        for (int i =0; i<p;i++){
+            sum += des.item*des.item;
+            des = des.next;
+
+        }
+        return sum;
     }
 
     /**
@@ -158,7 +220,12 @@ public class IntList {
      * @return new list with A followed by B.
      */
     public static IntList dcatenate(IntList A, IntList B) {
-        return null;
+        IntList C = A;
+        for  (int i = 0; i < C.iterativeSize(); i++){
+            C = C.next;
+        }
+        C.next = B;
+        return A;
     }
 
     /**
@@ -170,6 +237,16 @@ public class IntList {
      * @return new list with A followed by B.
      */
      public static IntList catenate(IntList A, IntList B) {
-         return null;
+         IntList D = new IntList(0, null);
+         IntList C = D;
+         for (int i=0; i<A.iterativeSize();i++){
+             C.item = A.item;
+             C.next = new IntList(A.next.item,null);
+             C = C.next;
+             A= A.next;
+         }
+         IntList.dcatenate(D, B);
+         return D;
+
      }
 }
