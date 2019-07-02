@@ -231,6 +231,12 @@ public class IntList {
      * @return new list with A followed by B.
      */
     public static IntList dcatenate(IntList A, IntList B) {
+        if(A == null){
+            return B;
+        }
+        if (B == null){
+            return A;
+        }
         IntList C = A;
         for  (int i = 0; i < C.iterativeSize(); i++){
             C = C.next;
