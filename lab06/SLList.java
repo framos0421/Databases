@@ -106,6 +106,15 @@ public class SLList {
         size += 1;
     }
 
+    public void addLast(int x) {
+        IntListNode p = sentinel.next;
+        while (p.next != this.sentinel){
+            p = p.next;
+        }
+        sentinel.next = new IntListNode(x, sentinel);
+        size += 1;
+    }
+
     /** Return the value at the given index. */
     public int get(int index) {
         IntListNode p = sentinel.next;
@@ -118,11 +127,38 @@ public class SLList {
 
     /** Adds x to the list at the specified index. */
     public void add(int index, int x) {
-        // TODO
+        IntListNode p = sentinel.next;
+        IntListNode o = sentinel;
+        if (index > size()){
+            addLast(x);
+            }
+        while (index > 0){
+            p = p.next;
+            o = o.next;
+            index -=1;
+        }
+        p = new IntListNode(x, p);
+        o.next = p;
+        size += 1;
+
+
+    }
+    public IntListNode reverseHelper(IntListNode nList){
+        if (nList.next == sentinel){
+            return nList;
+        }
+        else{
+            IntListNode temp = nList.next;
+            IntListNode end = reverseHelper(temp);
+            temp.next = nList;
+            nList.next = sentinel;
+            return end;
+        }
     }
 
     /** Destructively reverses this list. */
     public void reverse() {
-        // TODO
+    IntListNode nListReversed = reverseHelper(sentinel.next);
+    sentinel.next = nListReversed;
     }
 }
