@@ -1,9 +1,9 @@
 public class LinkedListDeque <T>{
 
-    private static class ListNode<T> {
+    private class ListNode {
         private T item;
-        public ListNode<T> next;
-        public ListNode<T> prev;
+        public ListNode next;
+        public ListNode prev;
 
         public ListNode(T item, ListNode next, ListNode prev) {
             this.item = item;
@@ -17,12 +17,12 @@ public class LinkedListDeque <T>{
         //private T item;
 
         public LinkedListDeque(){
-            sentinel = new ListNode(33, null, null);
+            sentinel = new ListNode(null, null, null);
             size = 0;
         }
 
         public LinkedListDeque(T x){
-            sentinel = new ListNode(33, null, null);
+            sentinel = new ListNode(null, null, null);
             sentinel.next = new ListNode(x, null, null);
             size = 1;
         }
@@ -106,8 +106,8 @@ public class LinkedListDeque <T>{
                 p = p.next;
                 index -= 1;
             }
-            return p.item;
         }
+        return p.item;
     }
 
     //Get using recursion.
