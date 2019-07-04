@@ -1,7 +1,7 @@
 public class LinkedListDeque <T>{
 
     private class ListNode {
-        private T item;
+        public T item;
         public ListNode next;
         public ListNode prev;
 
@@ -33,23 +33,48 @@ public class LinkedListDeque <T>{
 
         //Adds an item of type T to front of deque.
     public void addFirst(T item){
-        ListNode first = new ListNode(item, sentinel.next, sentinel.next.prev);
-        sentinel.next.prev.next = first;
-        sentinel.next.prev = first;
-        sentinel.next = first;
-        size += 1;
+        if (isEmpty()){
+            ListNode initial = new ListNode(item, null,null);
+            sentinel.next = initial;
+            size+= 1;
+        }else if (size() == 1){
+            ListNode second = new ListNode(item, sentinel.next, sentinel.next);
+            sentinel.next.next = second;
+            sentinel.next.prev = second;
+            sentinel.next = second;
+            size += 1;
+        }else {
+            ListNode first = new ListNode(item, sentinel.next, sentinel.next.prev);
+            sentinel.next.prev.next = first;
+            sentinel.next.prev = first;
+            sentinel.next = first;
+            size += 1;
+        }
+        //size += 1;
     }
 
     //Adds an item of type T to back of deque.
-    public void addLast(T item){
-        ListNode last = new ListNode(item, sentinel.next, sentinel.next.prev);
-        sentinel.next.prev.next = last;
-        sentinel.next.prev = last;
-        size +=1;
+    public void addLast(T item) {
+        if (isEmpty()) {
+            ListNode add = new ListNode(item, null, null);
+            sentinel.next = add;
+            size += 1;
+        } else if (size() == 1) {
+            ListNode second = new ListNode(item, sentinel.next, sentinel.next);
+            sentinel.next.next = second;
+            sentinel.next.prev = second;
+            size += 1;
+        } else {
+            ListNode last = new ListNode(item, sentinel.next, sentinel.next.prev);
+            sentinel.next.prev.next = last;
+            sentinel.next.prev = last;
+            size += 1;
+        }
     }
     //Returns true if deque is empty, false otherwise.
     public boolean isEmpty(){
-        return sentinel.next == null;
+        //return sentinel.next == null;
+        return size() == 0;
     }
     //Returns the number of items in the deque.
     public int size(){
@@ -59,8 +84,11 @@ public class LinkedListDeque <T>{
     //Prints the items in the deque from first to last separated by a space.
         // Once all the items have been printed, print out a new line.
     public void printDeque(){
+            if (size()==0){
+                return;
+            }
         ListNode l = sentinel.next;
-        String result = "" + l.item;
+        String result = "" + l.item + " ";
         ListNode x = l.next;
         while (x != l) {
             result += x.item + " ";
@@ -75,14 +103,35 @@ public class LinkedListDeque <T>{
     public T removeFirst(){
         if (isEmpty()){
             return null;
-        }
-        T itemFirst;
-        itemFirst = sentinel.next.item;
+        }else if(size() ==1){
+            T itemFirst = sentinel.next.item;
+            sentinel.next = null;
+            size -=1;
+            return itemFirst;
+        }else if(size() == 2){
+            T itemFirst = sentinel.next.item;
+            ListNode removed = sentinel.next;
+            sentinel.next.prev.next = null;
+            sentinel.next.prev.prev = null;
+            sentinel.next.item = null;
+            sentinel.next = sentinel.next.prev;
+            removed.item = null;
+            removed.next = null;
+            removed.prev = null;
+            size -=1;
+            return itemFirst;
+        } else {
+        T itemFirst = sentinel.next.item;
+        ListNode removed = sentinel.next;
         sentinel.next.prev.next = sentinel.next.next;
         sentinel.next.next.prev = sentinel.next.prev;
         sentinel.next = sentinel.next.next;
+        removed.item = null;
+        removed.next = null;
+        removed.prev = null;
         size -= 1;
-        return itemFirst;
+            return itemFirst;}
+
     }
     //Removes and returns the item at the back of the deque.
         // If no such item exists return null.
