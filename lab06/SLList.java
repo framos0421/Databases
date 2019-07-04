@@ -106,6 +106,7 @@ public class SLList {
         size += 1;
     }
 
+<<<<<<< HEAD
     public void addLast(int x) {
         IntListNode p = sentinel.next;
         while (p.next != this.sentinel){
@@ -113,6 +114,18 @@ public class SLList {
         }
         sentinel.next = new IntListNode(x, sentinel);
         size += 1;
+=======
+    /** Adds x to the end of the list. */
+    public void addLast(int x) {
+        IntListNode p = sentinel.next;
+        int index = this.size -1;
+        while (index > 0) {
+            p = p.next;
+            index -= 1;
+        }
+        p.next = new IntListNode(x, sentinel);
+        this.size +=1;
+>>>>>>> 4abad84760222d7af03c12a8b307011066493645
     }
 
     /** Return the value at the given index. */
@@ -127,6 +140,7 @@ public class SLList {
 
     /** Adds x to the list at the specified index. */
     public void add(int index, int x) {
+<<<<<<< HEAD
         IntListNode p = sentinel.next;
         IntListNode o = sentinel;
         if (index > size()){
@@ -160,5 +174,40 @@ public class SLList {
     public void reverse() {
     IntListNode nListReversed = reverseHelper(sentinel.next);
     sentinel.next = nListReversed;
+=======
+        if(index> this.size-1){
+            this.addLast(x);
+        }
+        else{
+        IntListNode O = sentinel;
+        IntListNode p = sentinel.next;
+        while (index > 0) {
+            p = p.next;
+            O = O.next;
+            index -= 1;
+        }
+        IntListNode NewNode = new IntListNode(x,p);
+        O.next = NewNode;
+        this.size+=1;}
+        }
+
+
+
+    /** Destructively reverses this list. */
+    public void reverse() {
+        IntListNode nakedListReversed = helper(this.sentinel.next);
+        this.sentinel.next = nakedListReversed;
+    }
+    public IntListNode helper (IntListNode n){
+        if (n.next == this.sentinel){
+            return n;
+        }
+        IntListNode temp = n.next;
+        IntListNode rest = helper(n.next);
+        temp.next = n;
+        n.next=sentinel;
+        return rest;
+
+>>>>>>> 4abad84760222d7af03c12a8b307011066493645
     }
 }

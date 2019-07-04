@@ -59,19 +59,19 @@ public class IntList {
      * @return The element at [position]
      */
     public int get(int position) {
-        IntList index = this;
-        int i = 0;
-        if (position < 0) {
-            throw new IllegalArgumentException("POSITION IS OUT OF RANGE");
+        if (position <0){
+            throw new IllegalArgumentException("Position out of range");
         }
-        while (i < position) {
-            if (index.next == null) {
-                throw new IllegalArgumentException("POSITION OUT OF RANGE");
-            }
-            i += 1;
-            index = index.next;
+        IntList p = this;
+        int l = 0;
+        while (l< position){
+           if(p.next==null){
+               throw new IllegalArgumentException("Position out of range");
+           }
+            p = p.next;
+            l++;
         }
-        return index.item;
+        return p.item;
     }
 
     /**
@@ -81,13 +81,14 @@ public class IntList {
      * @return The String representation of the list.
      */
     public String toString() {
-        //IntList i = new IntList;
-        String listRep = "";
-        while (this.next != null) {
-            String character = Integer.toString(this.item);
-            listRep += character;
+        IntList p = this;
+        String msg = "";
+        while (!(p.next == null)){
+            msg+= Integer.toString(p.item) +" ";
+            p = p.next;
         }
-        return listRep;
+        msg += p.item;
+        return msg;
     }
 
     public int iterativeSize() {
@@ -107,67 +108,74 @@ public class IntList {
      * @return Whether the two lists are equal.
      */
     public boolean equals(Object obj) {
-        if (obj instanceof IntList) {
-            if (this.iterativeSize() == ((IntList) obj).iterativeSize()) {
-                IntList another = this;
-                int p = 0;
-                int size = another.iterativeSize();
-                while (p < size) {
-                    if (another.item != ((IntList) obj).item) {
+        if (obj instanceof IntList){
+            if (this.iterativeSize()==((IntList) obj).iterativeSize()){
+                IntList des = this;
+                int p = this.iterativeSize();
+                int i = 0;
+                while (i<p){
+                    if (des.item != ((IntList)obj).item){
                         return false;
                     }
-                    obj = ((IntList) obj).next;
-                    another = another.next;
-                    p += 1;
+                    des = des.next;
+                    obj = ((IntList)obj).next;
+                    i++;
                 }
                 return true;
             }
-            return false;
         }
         return false;
     }
 
-        /**
-         * Adds the given value at the end of the list.
-         *
-         * @param value, the int to be added.
-         */
-        public void add ( int value){
-            IntList list = this;
-            int size = list.iterativeSize();
-            for (int i = 0; i < size; i++) {
-                list = list.next;
-            }
-            list.next = new IntList( value, null);
+    /**
+     * Adds the given value at the end of the list.
+     *
+     * @param value, the int to be added.
+     */
+    public void add(int value) {
+        int p = this.iterativeSize();
+        IntList des = this;
+        for(int i =1; i<p;i++){
+            des = des.next;
         }
+        des.next = new IntList(value, null);
+    }
 
-        /**
-         * Returns the smallest element in the list.
-         *
-         * @return smallest element in the list
-         */
-        public int smallest(){
-            IntList list = this.next;
-            int size = this.iterativeSize();
-            int small = this.item;
-            for (int i =0; i < size-1; i++){
-                if(list.item < small){
-                    small = list.item;
-                }
-                list = list.next;
+    /**
+     * Returns the smallest element in the list.
+     *
+     * @return smallest element in the list
+     */
+    public int smallest() {
+        int small = this.item;
+        int p = this.iterativeSize();
+        IntList des = this.next;
+        for( int i = 0; i<p-1;i++){
+            if(des.item<small){
+                small = des.item;
             }
-            return small;
+            des = des.next;
         }
+        return small;
+    }
 
-        /**
-         * Returns the sum of squares of all elements in the list.
-         *
-         * @return The sum of squares of all elements.
-         */
-        public int squaredSum () {
-            // YOUR CODE HERE
-            return -1;
+    /**
+     * Returns the sum of squares of all elements in the list.
+     *
+     * @return The sum of squares of all elements.
+     */
+    public int squaredSum() {
+        IntList des = this;
+        int p = iterativeSize();
+        int sum = 0;
+        for (int i =0; i<p;i++){
+            sum += des.item*des.item;
+            des = des.next;
+
         }
+        return sum;
+    }
+
 
         /**
          * Destructively squares each item of the list.
@@ -214,40 +222,54 @@ public class IntList {
             return new IntList(L.item * L.item, squareListRecursive(L.next));
         }
 
-        /**
-         * Returns a new IntList consisting of A followed by B,
-         * destructively.
-         *
-         * @param A list to be on the front of the new list.
-         * @param B list to be on the back of the new list.
-         * @return new list with A followed by B.
-         */
-        public static IntList dcatenate (IntList A, IntList B){
-            IntList C = A;
-            for (int i = 0; i < A.iterativeSize(); i++){
-                C = C.next;
-            }
-            C.next = B;
+    /**
+     * Returns a new IntList consisting of A followed by B,
+     * destructively.
+     *
+     * @param A list to be on the front of the new list.
+     * @param B list to be on the back of the new list.
+     * @return new list with A followed by B.
+     */
+    public static IntList dcatenate(IntList A, IntList B) {
+        if(A == null){
+            return B;
+        }
+        if (B == null){
             return A;
         }
-
-        /**
-         * Returns a new IntList consisting of A followed by B,
-         * non-destructively.
-         *
-         * @param A list to be on the front of the new list.
-         * @param B list to be on the back of the new list.
-         * @return new list with A followed by B.
-         */
-        public static IntList catenate (IntList A, IntList B){
-            IntList Z = new IntList(0, null);
-            IntList C = Z;
-            for (int i = 0; i < A.iterativeSize(); i++){
-                C.item = A.item;
-                C = C.next;
-                A = A.next;
-            }
-            return dcatenate(C,B);
-            }
+        IntList C = A;
+        for  (int i = 0; i < C.iterativeSize(); i++){
+            C = C.next;
         }
+        C.next = B;
+        return A;
+    }
 
+    /**
+     * Returns a new IntList consisting of A followed by B,
+     * non-destructively.
+     *
+     * @param A list to be on the front of the new list.
+     * @param B list to be on the back of the new list.
+     * @return new list with A followed by B.
+     */
+     public static IntList catenate(IntList A, IntList B) {
+         if(A == null){
+             return B;
+         }
+         if (B == null){
+             return A;
+         }
+         IntList D = new IntList(0, null);
+         IntList C = D;
+         for (int i=0; i<A.iterativeSize();i++){
+             C.item = A.item;
+             C.next = new IntList(A.next.item,null);
+             C = C.next;
+             A= A.next;
+         }
+         IntList.dcatenate(D, B);
+         return D;
+
+     }
+}
