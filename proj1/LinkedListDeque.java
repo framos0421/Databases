@@ -1,4 +1,4 @@
-public class LinkedListDeque <T>{
+public class LinkedListDeque <T> {
 
     private class ListNode {
         public T item;
@@ -12,45 +12,45 @@ public class LinkedListDeque <T>{
         }
     }
 
-        private ListNode sentinel;
-        private int size;
-        //private T item;
+    private ListNode sentinel;
+    private int size;
+    //private T item;
 
-        public LinkedListDeque(){
-            sentinel = new ListNode(null, null, null);
-            size = 0;
-        }
+    public LinkedListDeque() {
+        sentinel = new ListNode(null, null, null);
+        size = 0;
+    }
 
-        public LinkedListDeque(T x){
-            sentinel = new ListNode(null, null, null);
-            sentinel.next = new ListNode(x, null, null);
-            size = 1;
-        }
+    public LinkedListDeque(T x) {
+        sentinel = new ListNode(null, null, null);
+        sentinel.next = new ListNode(x, null, null);
+        size = 1;
+    }
 
-        //Creates an empty linked list deque.
-        //public LinkedListDeque(){}
+    //Creates an empty linked list deque.
+    //public LinkedListDeque(){}
 
 
-        //Adds an item of type T to front of deque.
-    public void addFirst(T item){
-        if (isEmpty()){
-            ListNode initial = new ListNode(item, null,null);
+    //Adds an item of type T to front of deque.
+    public void addFirst(T item) {
+        if (isEmpty()) {
+            ListNode initial = new ListNode(item, null, null);
             sentinel.next = initial;
-            size+= 1;
-        }else if (size() == 1){
+            size += 1;
+        } else if (size() == 1) {
             ListNode second = new ListNode(item, sentinel.next, sentinel.next);
             sentinel.next.next = second;
             sentinel.next.prev = second;
             sentinel.next = second;
             size += 1;
-        }else {
+        } else {
             ListNode first = new ListNode(item, sentinel.next, sentinel.next.prev);
             sentinel.next.prev.next = first;
             sentinel.next.prev = first;
             sentinel.next = first;
             size += 1;
         }
-        //size += 1;
+        size();
     }
 
     //Adds an item of type T to back of deque.
@@ -70,23 +70,29 @@ public class LinkedListDeque <T>{
             sentinel.next.prev = last;
             size += 1;
         }
+        size();
     }
+
     //Returns true if deque is empty, false otherwise.
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         //return sentinel.next == null;
         return size() == 0;
     }
+
     //Returns the number of items in the deque.
-    public int size(){
+    public int size() {
+        if (size < 0) {
+            size = 0;
+        }
         return size;
     }
 
     //Prints the items in the deque from first to last separated by a space.
-        // Once all the items have been printed, print out a new line.
-    public void printDeque(){
-            if (size()==0){
-                return;
-            }
+    // Once all the items have been printed, print out a new line.
+    public void printDeque() {
+        if (size() == 0) {
+            return;
+        }
         ListNode l = sentinel.next;
         String result = "" + l.item + " ";
         ListNode x = l.next;
@@ -99,16 +105,17 @@ public class LinkedListDeque <T>{
     }
 
     //Removes and returns the item at the front of the deque.
-        //If no such item exists return null.
-    public T removeFirst(){
-        if (isEmpty()){
+    //If no such item exists return null.
+    public T removeFirst() {
+        if (isEmpty()) {
             return null;
-        }else if(size() ==1){
+        } else if (size() == 1) {
             T itemFirst = sentinel.next.item;
             sentinel.next = null;
-            size -=1;
+            size -= 1;
+            size();
             return itemFirst;
-        }else if(size() == 2){
+        } else if (size() == 2) {
             T itemFirst = sentinel.next.item;
             ListNode removed = sentinel.next;
             sentinel.next.prev.next = null;
@@ -118,57 +125,98 @@ public class LinkedListDeque <T>{
             removed.item = null;
             removed.next = null;
             removed.prev = null;
-            size -=1;
+            size -= 1;
+            size();
             return itemFirst;
         } else {
-        T itemFirst = sentinel.next.item;
-        ListNode removed = sentinel.next;
-        sentinel.next.prev.next = sentinel.next.next;
-        sentinel.next.next.prev = sentinel.next.prev;
-        sentinel.next = sentinel.next.next;
-        removed.item = null;
-        removed.next = null;
-        removed.prev = null;
-        size -= 1;
-            return itemFirst;}
+            T itemFirst = sentinel.next.item;
+            ListNode removed = sentinel.next;
+            sentinel.next.prev.next = sentinel.next.next;
+            sentinel.next.next.prev = sentinel.next.prev;
+            sentinel.next = sentinel.next.next;
+            removed.item = null;
+            removed.next = null;
+            removed.prev = null;
+            size -= 1;
+            size();
+            return itemFirst;
+        }
 
     }
+
     //Removes and returns the item at the back of the deque.
-        // If no such item exists return null.
-    public T removeLast(){
-        if (isEmpty()){
+    // If no such item exists return null.
+    public T removeLast() {
+        /*if (isEmpty()){
             return null;
         }
-        T itemLast = sentinel.next.prev.item;
-        sentinel.next.prev = sentinel.next.prev.prev;
-        sentinel.next.prev.prev.next = sentinel.next;
+
         size -= 1;
         return itemLast;
+    }*/
+        if (isEmpty()) {
+            return null;
+        } else if (size() == 1) {
+            T itemFirst = sentinel.next.item;
+            sentinel.next = null;
+            size -= 1;
+            size();
+            return itemFirst;
+        } else if (size() == 2) {
+            T itemLast = sentinel.next.next.item;
+            ListNode removed = sentinel.next.next;
+            sentinel.next.next = null;
+            sentinel.next.prev = null;
+            removed.item = null;
+            removed.next = null;
+            removed.prev = null;
+            size -= 1;
+            size();
+            return itemLast;
+        } else {
+            ListNode removed = sentinel.next.prev;
+            T itemLast = sentinel.next.prev.item;
+            sentinel.next.prev.prev.next = sentinel.next;
+            sentinel.next.prev = sentinel.next.prev.prev;
+            removed.item = null;
+            removed.next = null;
+            removed.prev = null;
+            size -= 1;
+            size();
+            return itemLast;
+        }
+
     }
 
     //Gets the item at the given index.
-        //If no such item exists return null.
+    //If no such item exists return null.
     public T get(int index) {
-        ListNode p = sentinel.next;
-        if (index >= size()) {
+        if (index >= size() || (index < 0)) {
+            return null;
+        } else {
+            ListNode p = sentinel.next;
             while (index > 0) {
                 p = p.next;
                 index -= 1;
             }
+            return p.item;
         }
-        return p.item;
     }
 
     //Get using recursion.
-    public ListNode helper(int index, ListNode x){
-        if (index == 0){
+    public ListNode helper(int index, ListNode x) {
+        if (index == 0) {
             return x;
-        }
-        else{
-            return helper(index -1, x.next);
+        } else {
+            return helper(index - 1, x.next);
         }
     }
-    public T getRecursive(int index){
+
+    public T getRecursive(int index) {
+        if (index >= size() || (index < 0)) {
+            return null;
+        } else {
             return (helper(index, sentinel.next)).item;
+        }
     }
 }
