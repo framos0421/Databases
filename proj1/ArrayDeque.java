@@ -18,6 +18,14 @@ public class ArrayDeque<T> {
         int nextLast = 5;
     }
 
+    private int wrap(int p, int size) {
+        int r = p % size;
+        if (r < 0) {
+            r += size;
+        }
+        return r;
+    }
+
     //Adds an item of type T to front of deque.
     public void addFirst(T item){
         if (size == items.length){

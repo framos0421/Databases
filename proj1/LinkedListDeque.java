@@ -1,9 +1,9 @@
-public class LinkedListDeque <T> {
+public class LinkedListDeque<T> {
 
     private class ListNode {
-        public T item;
-        public ListNode next;
-        public ListNode prev;
+        private T item;
+        private ListNode next;
+        private ListNode prev;
 
         public ListNode(T item, ListNode next, ListNode prev) {
             this.item = item;
@@ -29,7 +29,6 @@ public class LinkedListDeque <T> {
 
     //Creates an empty linked list deque.
     //public LinkedListDeque(){}
-
 
     //Adds an item of type T to front of deque.
     public void addFirst(T item) {
