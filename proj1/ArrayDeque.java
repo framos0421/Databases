@@ -1,18 +1,18 @@
 public class ArrayDeque<T> {
 
-    public T[] items;
+    private T[] items;
     private int size;
     private int nextFirst;
     private int nextLast;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = (T[]) new Object [8];
         size = 0;
         nextFirst = 4;
         nextLast = 5;
     }
 
-    public ArrayDeque(T x){
+    public ArrayDeque(T x) {
         items = (T[]) new Object [8];
         this.items[4] = x;
         size = 1;
@@ -28,7 +28,7 @@ public class ArrayDeque<T> {
         return r;
     }
 
-    public void resize(int capacity){
+    public void resize(int capacity) {
         T[] a = (T[]) new Object [capacity];
         int currentLength = items.length;
         int lengthLast = nextFirst + 1;
@@ -43,26 +43,26 @@ public class ArrayDeque<T> {
     }
 
     //Adds an item of type T to front of deque.
-    public void addFirst(T item){
+    public void addFirst(T item) {
         if (size < items.length) {
             this.items[nextFirst] = item;
             nextFirst = wrap((nextFirst - 1), items.length);
             size += 1;
-        }else if(size == items.length){
+        } else if (size == items.length) {
             resize(items.length * 2);
             this.items[nextFirst] = item;
             nextFirst = (nextFirst - 1);
             size += 1;
         }
-        }
+    }
 
     //Adds an item of type T to back of deque.
-    public void addLast(T item){
-        if (size < items.length){
+    public void addLast(T item) {
+        if (size < items.length) {
             this.items[nextLast] = item;
             nextLast = wrap((nextLast + 1), items.length);
-            size +=1;
-        }else if(size == items.length){
+            size += 1;
+        } else if (size == items.length) {
             resize(items.length * 2);
             this.items[nextLast] = item;
             nextLast = (nextLast + 1);
@@ -71,24 +71,24 @@ public class ArrayDeque<T> {
     }
 
     //Returns true if deque is empty, false otherwise.
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return (size() == 0);
     }
 
     //Returns the number of items in the deque.
-    public int size(){
+    public int size() {
         return size;
     }
 
     //Prints the items in the deque from first to last separated by a space.
     // Once all the items have been printed, print out a new line.
-    public void printDeque(){
+    public void printDeque() {
         if (size() == 0) {
             return;
         }
         int index = wrap(nextFirst +  1,items.length);
         String result = "";
-        while ( index != nextLast) {
+        while (index != nextLast) {
             result += this.items[index] + " ";
             index = wrap(index+1, items.length);
         }
@@ -128,10 +128,10 @@ public class ArrayDeque<T> {
 
     //Gets the item at the given index.
     //If no such item exists return null.
-    public T get(int index){
-        if (index < 0 || index >= size()){
+    public T get(int index) {
+        if (index < 0 || index >= size()) {
             return null;
-        }else{
+        } else {
             int begin = wrap(nextFirst + 1, items.length);
             int place = wrap(begin + index, items.length);
             return this.items[place];
