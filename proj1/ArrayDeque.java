@@ -72,7 +72,7 @@ public class ArrayDeque<T> {
 
     //Returns true if deque is empty, false otherwise.
     public boolean isEmpty(){
-        return true;
+        return (size() == 0);
     }
 
     //Returns the number of items in the deque.
@@ -83,26 +83,58 @@ public class ArrayDeque<T> {
     //Prints the items in the deque from first to last separated by a space.
     // Once all the items have been printed, print out a new line.
     public void printDeque(){
+        if (size() == 0) {
+            return;
+        }
+        int index = wrap(nextFirst +  1,items.length);
+        String result = "";
+        while ( index != nextLast) {
+            result += this.items[index] + " ";
+            index = wrap(index+1, items.length);
+        }
 
+        System.out.println(result.trim());
     }
 
     //Removes and returns the item at the front of the deque.
     //If no such item exists return null.
-    public T removeFirst(){
-        return null;
+    public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        } else {
+            int index = wrap(nextFirst + 1, items.length);
+            T storedItem = this.items[index];
+            this.items[index] = null;
+            nextFirst = index;
+            size -= 1;
+            return storedItem;
+        }
     }
 
     //Removes and returns the item at the back of the deque.
     // If no such item exists return null.
-    public T removeLast(){
-        return null;
+    public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        } else {
+            int index = wrap(nextLast - 1, items.length);
+            T storedItem = this.items[index];
+            this.items[index] = null;
+            nextLast = index;
+            size -= 1;
+            return storedItem;
+        }
     }
 
     //Gets the item at the given index.
     //If no such item exists return null.
     public T get(int index){
-        return null;
+        if (index < 0 || index >= size()){
+            return null;
+        }else{
+            int begin = wrap(nextFirst + 1, items.length);
+            int place = wrap(begin + index, items.length);
+            return this.items[place];
+        }
     }
-
-
 }
