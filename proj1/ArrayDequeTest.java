@@ -53,4 +53,55 @@ public class ArrayDequeTest {
         ad1.printDeque();
 
     }
-}
+
+    @Test
+    public void yourTest2Here() {
+        ArrayDeque<Integer> ad2 = new ArrayDeque<>();
+        ad2.addFirst(0);
+
+        ad2.addFirst(1);
+
+        ad2.addLast(2);
+
+        ad2.get(1);
+
+        ad2.removeLast();
+
+        ad2.removeFirst();
+
+        ad2.addLast(6);
+
+        ad2.removeFirst();
+
+        ad2.removeLast();
+
+        ad2.addFirst(9);
+
+        ad2.addLast(10);
+
+        ad2.addFirst(11);
+
+        ad2.get(0);
+
+        ad2.addLast(13);
+
+        ad2.addLast(14);
+
+        ad2.addFirst(15);
+
+        ad2.addFirst(16);
+
+        ad2.addFirst(17);
+
+        ad2.addFirst(18);
+
+        ad2.addLast(19);
+
+        ad2.addFirst(20);
+
+        ad2.removeLast();
+
+        ad2.get(2);
+        System.out.println(ad2.get(2));
+        }
+    }

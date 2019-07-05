@@ -24,14 +24,16 @@ public class ArrayDeque<T> implements Deque<T> {
         T[] a = (T[]) new Object [capacity];
         int currentLength = items.length;
         int lengthLast = wrap(nextFirst + 1, items.length);
-        int lengthStart = wrap(currentLength - nextLast, items.length);
+        int lengthStart = currentLength - nextLast;
         int starting = capacity - lengthStart;
         //Copies end of list
         System.arraycopy(items, 0, a, 0, lengthLast);
         //Copies beginning of list
         System.arraycopy(items, nextLast, a, starting, lengthStart);
         items = a;
-        nextFirst = (nextFirst + currentLength);
+        if (nextFirst != currentLength - 1) {
+            nextFirst = (nextFirst + currentLength);
+        }
     }
 
 
@@ -95,9 +97,9 @@ public class ArrayDeque<T> implements Deque<T> {
             this.items[index] = null;
             nextFirst = index;
             size -= 1;
-            if ((size() / items.length) < 0.25) {
-                resize(items.length / 2);
-            }
+            //if (items.length > 8 && (size() / items.length) < 0.25) {
+                //resize(items.length / 2);
+            //}
             return storedItem;
         }
     }
@@ -113,9 +115,9 @@ public class ArrayDeque<T> implements Deque<T> {
             this.items[index] = null;
             nextLast = index;
             size -= 1;
-            if ((size() / items.length) < 0.25) {
-                resize(items.length / 2);
-            }
+            //if (items.length > 8 && (size() / items.length) < 0.25) {
+                //resize(items.length / 2);
+            //}
             return storedItem;
         }
     }
