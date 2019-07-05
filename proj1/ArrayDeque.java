@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
 
     private T[] items;
     private int size;
@@ -12,28 +12,20 @@ public class ArrayDeque<T> implements Deque<T>{
         nextLast = 5;
     }
 
-    public ArrayDeque(T x) {
-        items = (T[]) new Object [8];
-        this.items[4] = x;
-        size = 1;
-        nextFirst = 3;
-        nextLast = 5;
-    }
-
-    private int wrap(int p, int size) {
-        int r = p % size;
+    private int wrap(int p, int total) {
+        int r = p % total;
         if (r < 0) {
-            r += size;
+            r += total;
         }
         return r;
     }
 
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] a = (T[]) new Object [capacity];
         int currentLength = items.length;
-        int lengthLast = nextFirst + 1;
-        int lengthStart = currentLength - nextLast;
-        int starting = capacity - (currentLength - nextLast);
+        int lengthLast = wrap(nextFirst + 1, items.length);
+        int lengthStart = wrap(currentLength - nextLast,items.length);
+        int starting = capacity - lengthStart;
         //Copies end of list
         System.arraycopy(items, 0, a, 0, lengthLast);
         //Copies beginning of list
@@ -81,11 +73,11 @@ public class ArrayDeque<T> implements Deque<T>{
         if (size() == 0) {
             return;
         }
-        int index = wrap(nextFirst +  1,items.length);
+        int index = wrap(nextFirst +  1, items.length);
         String result = "";
         while (index != nextLast) {
             result += this.items[index] + " ";
-            index = wrap(index+1, items.length);
+            index = wrap(index + 1, items.length);
         }
 
         System.out.println(result.trim());

@@ -21,12 +21,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T x) {
-        sentinel = new ListNode(null, null, null);
-        sentinel.next = new ListNode(x, null, null);
-        size = 1;
-    }
-
     //Creates an empty linked list deque.
     //public LinkedListDeque(){}
 
@@ -189,7 +183,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     //Get using recursion.
-    public ListNode helper(int index, ListNode x) {
+    private ListNode helper(int index, ListNode x) {
         if (index == 0) {
             return x;
         } else {

@@ -35,20 +35,22 @@ public class ArrayDequeTest {
         ad1.addFirst(-4);
         assertEquals(9, ad1.size());
 
-        ad1.removeFirst();
+        //ad1.removeFirst();
         int a = ad1.removeFirst();
-        assertEquals(-3, a);
-        assertEquals(7, ad1.size());
+        assertEquals(-4, a);
+        assertEquals(8, ad1.size());
 
         ad1.printDeque();
 
-        ad1.get(3);
-        int b = ad1.get(3);
-        assertEquals(1, b);
+        //ad1.get(3);
+        //int b = ad1.get(3);
+        //assertEquals(1, b);
 
-        ad1.removeLast();
+        //ad1.removeLast();
         int c = ad1.removeLast();
-        assertEquals(3, c);
+        assertEquals(4, c);
+
+        ad1.printDeque();
 
     }
 }
