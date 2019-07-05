@@ -1,21 +1,23 @@
 public class ArrayDeque<T> {
 
-    private T[] items;
+    public T[] items;
     private int size;
+    private int nextFirst;
+    private int nextLast;
 
     public ArrayDeque(){
-        //this.items = new T[8];
-        int size = 0;
-        int nextFirst = 4;
-        int nextLast = 5;
+        items = (T[]) new Object [8];
+        size = 0;
+        nextFirst = 4;
+        nextLast = 5;
     }
 
     public ArrayDeque(T x){
-        //this.items = new T[8];
+        items = (T[]) new Object [8];
         this.items[4] = x;
-        int size = 1;
-        int nextFirst = 3;
-        int nextLast = 5;
+        size = 1;
+        nextFirst = 3;
+        nextLast = 5;
     }
 
     private int wrap(int p, int size) {
@@ -26,24 +28,44 @@ public class ArrayDeque<T> {
         return r;
     }
 
+    public void resize(int capacity){
+        T[] a = (T[]) new Object [capacity];
+        int currentLength = items.length;
+        int lengthLast = nextFirst + 1;
+        int lengthStart = currentLength - nextLast;
+        int starting = capacity - (currentLength - nextLast);
+        //Copies end of list
+        System.arraycopy(items, 0, a, 0, lengthLast);
+        //Copies beginning of list
+        System.arraycopy(items, nextLast, a, starting, lengthStart);
+        items = a;
+        nextFirst = (nextFirst + currentLength);
+    }
+
     //Adds an item of type T to front of deque.
     public void addFirst(T item){
-        if (size == items.length){
-            //T[] a = new T[size + 1];
-            //System.arraycopy(items, 0, a, 1, size);
-            //items = a;
-            items[0] = item;
+        if (size < items.length) {
+            this.items[nextFirst] = item;
+            nextFirst = wrap((nextFirst - 1), items.length);
+            size += 1;
+        }else if(size == items.length){
+            resize(items.length * 2);
+            this.items[nextFirst] = item;
+            nextFirst = (nextFirst - 1);
             size += 1;
         }
         }
 
     //Adds an item of type T to back of deque.
     public void addLast(T item){
-        if (size == items.length){
-            //T[] a = new T[size + 1];
-            //System.arraycopy(items, 0, a, 0, size);
-            //items = a;
-            items[size] = item;
+        if (size < items.length){
+            this.items[nextLast] = item;
+            nextLast = wrap((nextLast + 1), items.length);
+            size +=1;
+        }else if(size == items.length){
+            resize(items.length * 2);
+            this.items[nextLast] = item;
+            nextLast = (nextLast + 1);
             size += 1;
         }
     }
@@ -55,7 +77,7 @@ public class ArrayDeque<T> {
 
     //Returns the number of items in the deque.
     public int size(){
-        return 0;
+        return size;
     }
 
     //Prints the items in the deque from first to last separated by a space.
@@ -66,15 +88,21 @@ public class ArrayDeque<T> {
 
     //Removes and returns the item at the front of the deque.
     //If no such item exists return null.
-    //public T removeFirst(){ }
+    public T removeFirst(){
+        return null;
+    }
 
     //Removes and returns the item at the back of the deque.
     // If no such item exists return null.
-    //public T removeLast(){ }
+    public T removeLast(){
+        return null;
+    }
 
     //Gets the item at the given index.
     //If no such item exists return null.
-    //public T get(int index){ }
+    public T get(int index){
+        return null;
+    }
 
 
 }
