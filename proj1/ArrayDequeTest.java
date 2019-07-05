@@ -102,6 +102,21 @@ public class ArrayDequeTest {
         ad2.removeLast();
 
         ad2.get(2);
-        System.out.println(ad2.get(2));
-        }
+        System.out.println(ad2.get(2) + "get works" + ad2.size());
+
+        ad2.removeFirst();
+        ad2.removeLast();
+
+        ad2.removeFirst();
+        ad2.removeLast();
+
+        ad2.removeFirst();
+        ad2.removeLast();
+
+        ad2.removeLast();
+
+
+
+
     }
+}

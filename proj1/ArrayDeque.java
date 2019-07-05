@@ -36,6 +36,24 @@ public class ArrayDeque<T> implements Deque<T> {
         }
     }
 
+    private void resizeDown(int capacity) {
+        T[] a = (T[]) new Object [capacity];
+        int newNext = wrap(nextFirst, capacity);
+        int newLast = wrap(nextLast, capacity);
+        if (items[0] == null || items[items.length-1] == null) {
+            System.arraycopy(items, nextFirst + 1, a,newNext + 1, size());
+            items = a;
+            nextFirst = newNext;
+            nextLast = newLast;
+        } else {
+            System.arraycopy(items, 0, a, 0, nextLast);
+            System.arraycopy(items, nextFirst + 1, a, newNext + 1, items.length - nextFirst + 1);
+            items = a;
+            nextFirst = newNext;
+            nextLast = newLast;
+        }
+    }
+
 
     //Adds an item of type T to front of deque.
     public void addFirst(T item) {
@@ -97,9 +115,11 @@ public class ArrayDeque<T> implements Deque<T> {
             this.items[index] = null;
             nextFirst = index;
             size -= 1;
-            //if (items.length > 8 && (size() / items.length) < 0.25) {
-                //resize(items.length / 2);
-            //}
+            Double siz = new Double(size());
+            Double ratio = siz / items.length;
+            if (items.length > 8 && ((ratio) < 0.25)) {
+                resizeDown(items.length / 2);
+            }
             return storedItem;
         }
     }
@@ -115,9 +135,11 @@ public class ArrayDeque<T> implements Deque<T> {
             this.items[index] = null;
             nextLast = index;
             size -= 1;
-            //if (items.length > 8 && (size() / items.length) < 0.25) {
-                //resize(items.length / 2);
-            //}
+            Double siz = new Double(size());
+            Double ratio = siz / items.length;
+            if (items.length > 8 && (ratio < 0.25)) {
+                resizeDown(items.length / 2);
+            }
             return storedItem;
         }
     }
