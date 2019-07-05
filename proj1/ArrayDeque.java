@@ -118,10 +118,12 @@ public class ArrayDeque<T> implements Deque<T> {
             //Double siz = new Double(size());
             //Double ratio = siz / items.length;
             //if (items.length > 8 && ((ratio) < 0.25)) {
-                //resizeDown(items.length / 2);
+            //resizeDown(items.length / 2);
             //}
             return storedItem;
         }
+
+    }
     //}
 
     //Removes and returns the item at the back of the deque.
@@ -138,11 +140,11 @@ public class ArrayDeque<T> implements Deque<T> {
             //Double siz = new Double(size());
             //Double ratio = siz / items.length;
             //if (items.length > 8 && (ratio < 0.25)) {
-                //resizeDown(items.length / 2);
+            //resizeDown(items.length / 2);
             //}
             return storedItem;
         }
-   // }
+    }
 
     //Gets the item at the given index.
     //If no such item exists return null.
