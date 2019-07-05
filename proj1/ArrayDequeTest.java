@@ -46,6 +46,9 @@ public class ArrayDequeTest {
         int b = ad1.get(3);
         assertEquals(1, b);
 
+        ad1.removeLast();
+        int c = ad1.removeLast();
+        assertEquals(3, c);
 
     }
 }

@@ -1,4 +1,4 @@
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> {
 
     private class ListNode {
         private T item;
@@ -72,12 +72,6 @@ public class LinkedListDeque<T> {
         size();
     }
 
-    //Returns true if deque is empty, false otherwise.
-    public boolean isEmpty() {
-        //return sentinel.next == null;
-        return size() == 0;
-    }
-
     //Returns the number of items in the deque.
     public int size() {
         if (size < 0) {
@@ -146,13 +140,6 @@ public class LinkedListDeque<T> {
     //Removes and returns the item at the back of the deque.
     // If no such item exists return null.
     public T removeLast() {
-        /*if (isEmpty()){
-            return null;
-        }
-
-        size -= 1;
-        return itemLast;
-    }*/
         if (isEmpty()) {
             return null;
         } else if (size() == 1) {
@@ -184,7 +171,6 @@ public class LinkedListDeque<T> {
             size();
             return itemLast;
         }
-
     }
 
     //Gets the item at the given index.

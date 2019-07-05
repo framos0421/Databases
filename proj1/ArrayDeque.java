@@ -1,4 +1,4 @@
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
 
     private T[] items;
     private int size;
@@ -68,11 +68,6 @@ public class ArrayDeque<T> {
             nextLast = (nextLast + 1);
             size += 1;
         }
-    }
-
-    //Returns true if deque is empty, false otherwise.
-    public boolean isEmpty() {
-        return (size() == 0);
     }
 
     //Returns the number of items in the deque.
