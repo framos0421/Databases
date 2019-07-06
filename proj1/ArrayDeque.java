@@ -114,7 +114,7 @@ public class ArrayDeque<T> implements Deque<T> {
             Double siz = new Double(size());
             Double ratio = siz / items.length;
             if (items.length > 8 && ((ratio) < 0.25)) {
-            resizeDown(items.length / 2);
+                resizeDown(items.length / 2);
             }
             return storedItem;
         }
@@ -135,7 +135,7 @@ public class ArrayDeque<T> implements Deque<T> {
             Double siz = new Double(size());
             Double ratio = siz / items.length;
             if (items.length > 8 && (ratio < 0.25)) {
-            resizeDown(items.length / 2);
+                resizeDown(items.length / 2);
             }
             return storedItem;
         }
