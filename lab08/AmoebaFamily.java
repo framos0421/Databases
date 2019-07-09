@@ -23,8 +23,9 @@ public class AmoebaFamily {
        the ROOT Amoeba printed first. Each Amoeba should be indented four spaces
        more than its parent. */
     public void print() {
-        // TODO
+        root.printHelper(0);
     }
+
 
     /* Returns the length of the longest name in this AmoebaFamily. */
     public int longestNameLength() {
@@ -33,8 +34,7 @@ public class AmoebaFamily {
 
     /* Returns the longest name in this AmoebaFamily. */
     public String longestName() {
-        // TODO
-        return null;
+       return root.longestNameHelper();
     }
 
     /* An Amoeba is a node of an AmoebaFamily. */
@@ -62,6 +62,22 @@ public class AmoebaFamily {
             return children;
         }
 
+        public void printHelper(int indent){
+            int inden = indent;
+            while(inden>0){
+                System.out.print("    ");
+                inden--;
+            }
+            System.out.println(this.name);
+            if (children.size()==0){
+               return; }
+            else{
+               for(Amoeba a: this.children){
+                   a.printHelper(indent+1);
+               }
+            }
+        }
+
         /* Adds child with name CHILDNAME to an Amoeba with name PARENTNAME. */
         public void addChildHelper(String parentName, String childName) {
             if (name.equals(parentName)) {
@@ -83,6 +99,16 @@ public class AmoebaFamily {
                                          a.longestNameLengthHelper());
             }
             return maxLengthSeen;
+        }
+
+        public String longestNameHelper() {
+            String maxLengthname = name;
+            for (Amoeba a : children) {
+               if (maxLengthname.length()<a.longestNameHelper().length()){
+                   maxLengthname= a.longestNameHelper();
+               }
+            }
+            return maxLengthname;
         }
     }
 }

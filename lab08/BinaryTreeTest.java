@@ -17,8 +17,6 @@ public class BinaryTreeTest {
         List<String> tree1Contents = sampleTree1.getContents();
         assertEquals("a", tree1Contents.get(0));
 
-        // TODO
-        fail("Add your own tests here, using the provided sample trees or your own trees.");
     }
 
     // SAMPLE TREES

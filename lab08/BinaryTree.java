@@ -102,20 +102,36 @@ public class BinaryTree<T> {
 
     /* Returns the height of the tree. */
     public int height() {
-        // TODO
-        return -1;
+        return root.heightHelper();
     }
 
     /* Returns true if the tree's left and right children are the same height
        and are themselves completely balanced. */
     public boolean isCompletelyBalanced() {
-        // TODO
-        return false;
+        if(root == null){
+            return true;
+        }
+        return root.balancedHelper();
     }
 
     public static BinaryTree<Integer> fibTree(int N) {
-        // TODO
-        return null;
+            BinaryTree<Integer> fib = new BinaryTree<Integer>();
+            fib.root = fibbHelper(N);
+            return fib;
+    }
+    public static TreeNode<Integer> fibbHelper(int n){
+        if (n==0){
+            return new TreeNode<Integer>(0);
+        }
+        else if (n==1){
+            return new TreeNode<Integer>(1);
+        }
+        else{
+            TreeNode<Integer> lefty = fibbHelper(n-1);
+            TreeNode<Integer> righty = fibbHelper(n-2);
+            int item = lefty.item + righty.item;
+            return new TreeNode<Integer>(item,lefty,righty);
+        }
     }
 
     private static class TreeNode<T> {
@@ -134,6 +150,36 @@ public class BinaryTree<T> {
             item = obj;
             this.left = left;
             this.right = right;
+        }
+
+        public int heightHelper(){
+            if(this.left == null && this.right == null){
+                return 1;
+            }
+            else if( this.left == null){
+                return this.right.heightHelper()+1;
+            }
+            else if (this.right == null){
+                return this.left.heightHelper() + 1;
+            }
+            else{
+                return Math.max(this.left.heightHelper(), this.right.heightHelper())+1;
+            }
+        }
+
+        public boolean balancedHelper(){
+            if(this.left == null && this.right == null){
+                return true;
+            }
+            else if( this.left == null){
+                return false;
+            }
+            else if (this.right == null){
+                return false;
+            }
+            else{
+              return (left.balancedHelper())&&(right.balancedHelper())&&(left.heightHelper()==right.heightHelper());
+            }
         }
     }
 }
