@@ -25,6 +25,15 @@ public class SLListTest {
     }
 
     @Test
+<<<<<<< HEAD
+    public void testSLListReverse(){
+        SLList test1 = SLList.of(1, 2, 3);
+        SLList test2 = new SLList();
+
+        test1.reverse();
+        assertEquals(3, test1.size());
+        assertEquals(3, test1.get(0));
+=======
     public void testSLListReverse() {
         SLList tes1 = SLList.of(1, 2,3);
         SLList tes2 = new SLList();
@@ -44,5 +53,6 @@ public class SLListTest {
         assertEquals(5, tes2.get(0));
         assertEquals(1,tes2.size());
 
+>>>>>>> 4abad84760222d7af03c12a8b307011066493645
     }
 }

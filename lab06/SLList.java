@@ -106,6 +106,15 @@ public class SLList {
         size += 1;
     }
 
+<<<<<<< HEAD
+    public void addLast(int x) {
+        IntListNode p = sentinel.next;
+        while (p.next != this.sentinel){
+            p = p.next;
+        }
+        sentinel.next = new IntListNode(x, sentinel);
+        size += 1;
+=======
     /** Adds x to the end of the list. */
     public void addLast(int x) {
         IntListNode p = sentinel.next;
@@ -116,6 +125,7 @@ public class SLList {
         }
         p.next = new IntListNode(x, sentinel);
         this.size +=1;
+>>>>>>> 4abad84760222d7af03c12a8b307011066493645
     }
 
     /** Return the value at the given index. */
@@ -130,6 +140,41 @@ public class SLList {
 
     /** Adds x to the list at the specified index. */
     public void add(int index, int x) {
+<<<<<<< HEAD
+        IntListNode p = sentinel.next;
+        IntListNode o = sentinel;
+        if (index > size()){
+            addLast(x);
+            }
+        while (index > 0){
+            p = p.next;
+            o = o.next;
+            index -=1;
+        }
+        p = new IntListNode(x, p);
+        o.next = p;
+        size += 1;
+
+
+    }
+    public IntListNode reverseHelper(IntListNode nList){
+        if (nList.next == sentinel){
+            return nList;
+        }
+        else{
+            IntListNode temp = nList.next;
+            IntListNode end = reverseHelper(temp);
+            temp.next = nList;
+            nList.next = sentinel;
+            return end;
+        }
+    }
+
+    /** Destructively reverses this list. */
+    public void reverse() {
+    IntListNode nListReversed = reverseHelper(sentinel.next);
+    sentinel.next = nListReversed;
+=======
         if(index> this.size-1){
             this.addLast(x);
         }
@@ -163,5 +208,6 @@ public class SLList {
         n.next=sentinel;
         return rest;
 
+>>>>>>> 4abad84760222d7af03c12a8b307011066493645
     }
 }
